@@ -1,0 +1,36 @@
+version: 2
+models:
+  - name: fct_order_revenue
+    columns:
+      - name: order_id
+        tests: [unique, not_null]
+  - name: fct_revenue_daily
+    description: Revenue per day. Certified.
+    tags: [certified]
+    columns:
+      - name: revenue_date
+        tests: [unique, not_null]
+      - name: revenue
+        description: Net revenue of the day, refunds taken off.
+  - name: fct_refunds_daily
+    columns:
+      - name: refund_date
+        tests: [unique, not_null]
+  - name: rpt_margin_daily
+    columns:
+      - name: revenue_date
+        tests: [unique, not_null]
+exposures:
+  - name: weekly_revenue_pack
+    type: dashboard
+    maturity: high
+    url: https://bi.harborretail.example/weekly-revenue
+    description: Tableau report used by the CFO office.
+    owner:
+      name: Finance team
+    depends_on:
+      - ref('fct_revenue_daily')
+    meta:
+      semagraph:
+        columns:
+          fct_revenue_daily: [revenue_date, revenue]

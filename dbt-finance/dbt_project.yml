@@ -1,0 +1,11 @@
+# Harbor Retail, a made-up company: the Finance team's dbt project. It reads tables the Orders project builds.
+name: finance
+version: "1.0.0"
+profile: harbor
+model-paths: ["models"]
+models:
+  finance:
+    staging:
+      +materialized: view
+    marts:
+      +materialized: table

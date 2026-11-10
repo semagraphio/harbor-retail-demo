@@ -1,0 +1,10 @@
+--- a/models/marts/delivery_regions.sql
++++ b/models/marts/delivery_regions.sql
+@@ -0,0 +1,7 @@
++select
++    ship_city,
++    ship_postcode,
++    count(*) as order_count,
++    avg(total_amount) as average_amount
++from {{ ref('orders') }}
++group by ship_city, ship_postcode

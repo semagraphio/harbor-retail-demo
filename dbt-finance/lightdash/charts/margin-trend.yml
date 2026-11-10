@@ -1,0 +1,26 @@
+# Made up for the demo, in the shape `lightdash download` writes.
+name: Margin trend
+description: Daily margin after refunds.
+tableName: rpt_margin_daily
+updatedAt: "2026-10-01T09:00:00.000Z"
+metricQuery:
+  exploreName: rpt_margin_daily
+  dimensions:
+    - rpt_margin_daily_revenue_date
+  metrics:
+    - rpt_margin_daily_margin_sum
+  filters: {}
+  sorts:
+    - fieldId: rpt_margin_daily_revenue_date
+      descending: false
+  limit: 365
+  tableCalculations: []
+chartConfig:
+  type: cartesian
+slug: margin-trend
+tableConfig:
+  columnOrder:
+    - rpt_margin_daily_revenue_date
+    - rpt_margin_daily_margin_sum
+spaceSlug: finance
+version: 1

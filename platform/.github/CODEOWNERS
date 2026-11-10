@@ -1,0 +1,6 @@
+# Who looks after which folders. Read by the code host and by Semagraph for owners.
+/dbt/ @harbor-retail/platform
+/schemas/ @diego_martin @mei_tanaka @asha_raman
+/warehouse/ @harbor-retail/platform
+/jobs/ @mei_tanaka @asha_raman
+/procs/ @mei_tanaka @asha_raman

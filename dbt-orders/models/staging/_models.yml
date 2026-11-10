@@ -1,0 +1,7 @@
+version: 2
+models:
+  - name: stg_orders
+    description: Orders as the order system writes them, one row per order.
+    columns:
+      - name: order_id
+        tests: [unique, not_null]

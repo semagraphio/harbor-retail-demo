@@ -1,0 +1,5 @@
+name: warehouse
+type: snowflake
+options:
+  account: harbor-retail
+  database: analytics

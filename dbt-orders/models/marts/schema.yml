@@ -1,0 +1,79 @@
+version: 2
+models:
+  - name: orders
+    description: One row per customer order, from checkout to delivery.
+    columns:
+      - name: order_id
+        tests: [unique, not_null]
+      - name: customer_id
+        tests: [not_null, {relationships: {to: "ref('customer_orders')", field: customer_id}}]
+      - name: status
+      - name: ship_city
+        description: The city the order ships to.
+      - name: ship_postcode
+      - name: total_amount
+      - name: paid_amount
+  - name: order_items
+    description: One row per product in an order.
+    columns:
+      - name: order_item_id
+        tests: [unique, not_null]
+        meta:
+          metrics:
+            order_lines: {type: count_distinct, label: Order lines, description: "Products sold, one per order line."}
+      - name: order_id
+        tests: [not_null, {relationships: {to: "ref('orders')", field: order_id}}]
+  - name: orders_by_status
+    columns:
+      - name: status
+        tests: [unique, not_null]
+  - name: shipping_zones
+    description: Orders grouped by where they ship to.
+    config:
+      group: delivery
+  - name: customer_orders
+    columns:
+      - name: customer_id
+        tests: [unique, not_null]
+        meta:
+          metrics:
+            customers_with_orders: {type: count_distinct, label: Customers with orders, description: Customers who placed at least one order.}
+  - name: order_scores
+    description: How likely each order is to arrive late, scored in Python.
+    meta:
+      owner:
+        name: Priya Shah
+        email: priya.shah@harbor-retail.example
+    columns:
+      - name: order_id
+        tests: [unique, not_null]
+      - name: total_amount
+exposures:
+  - name: shipping_cost_dashboard
+    type: dashboard
+    maturity: high
+    url: https://bi.harborretail.example/shipping-cost
+    description: Shipping cost by city, for the Finance team.
+    owner:
+      name: Finance team
+    depends_on:
+      - ref('orders')
+      - ref('shipping_zones')
+    meta:
+      semagraph:
+        columns:
+          orders: [ship_city]
+          shipping_zones: [ship_city, zone]
+  - name: partner_address_feed
+    type: application
+    maturity: medium
+    description: A data product sent to delivery partners. Column usage unknown.
+    owner:
+      name: Orders team
+    depends_on:
+      - ref('orders')
+groups:
+  - name: delivery
+    owner:
+      name: Platform
+      email: platform@harbor-retail.example

@@ -1,0 +1,13 @@
+# Harbor Retail, a made-up company: the Orders team's dbt project.
+name: orders
+version: "1.0.0"
+profile: harbor
+model-paths: ["models"]
+macro-paths: ["macros"]
+seed-paths: ["seeds"]
+models:
+  orders:
+    staging:
+      +materialized: view
+    marts:
+      +materialized: table

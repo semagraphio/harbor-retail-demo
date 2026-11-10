@@ -1,0 +1,17 @@
+version: 2
+sources:
+  - name: orders
+    description: Tables the Orders team's dbt project builds.
+    tables:
+      - name: orders
+      - name: order_items
+  - name: ledger
+    description: The general ledger, loaded nightly.
+    tables:
+      - name: gl_entries
+        columns:
+          - name: entry_id
+          - name: order_id
+          - name: entry_type
+          - name: amount
+          - name: booked_at

@@ -1,0 +1,56 @@
+version: 2
+semantic_models:
+  - name: orders
+    description: Orders as the business counts them, by day and by city.
+    model: ref('orders')
+    defaults:
+      agg_time_dimension: ordered_at
+    entities:
+      - name: order
+        type: primary
+        expr: order_id
+      - name: customer
+        type: foreign
+        expr: customer_id
+    dimensions:
+      - name: ordered_at
+        type: time
+        type_params:
+          time_granularity: day
+      - name: ship_city
+        type: categorical
+    measures:
+      - name: order_total
+        agg: sum
+        expr: total_amount
+      - name: paid_total
+        agg: sum
+        expr: paid_amount
+metrics:
+  - name: order_revenue
+    label: Order revenue
+    description: Everything customers were charged, before refunds.
+    type: simple
+    type_params:
+      measure: order_total
+  - name: paid_revenue
+    label: Paid revenue
+    type: simple
+    type_params:
+      measure: paid_total
+    filter: "{{ Dimension('order__ship_city') }} is not null"
+  - name: paid_share
+    label: Paid share
+    description: The part of the order revenue that has been paid.
+    type: ratio
+    type_params:
+      numerator: paid_revenue
+      denominator: order_revenue
+  - name: unpaid_revenue
+    label: Unpaid revenue
+    type: derived
+    type_params:
+      expr: order_revenue - paid_revenue
+      metrics:
+        - name: order_revenue
+        - name: paid_revenue

@@ -1,0 +1,39 @@
+version: 2
+sources:
+  - name: oms
+    description: The order service's database, written by the Java service.
+    tables:
+      - name: oms_order
+        columns:
+          - name: id
+          - name: member_id
+          - name: pay_amount
+          - name: status
+          - name: receiver_city
+          - name: receiver_postcode
+          - name: create_time
+          - name: modify_time
+      - name: oms_order_item
+        columns:
+          - name: id
+          - name: order_id
+          - name: product_id
+          - name: product_quantity
+          - name: product_price
+      - name: oms_member
+        columns:
+          - name: id
+          - name: email
+          - name: create_time
+      - name: oms_order_archive
+  - name: lake
+    description: Tables the landing jobs write.
+    tables:
+      - name: bronze_payments
+      - name: payment_audit
+        schema: bronze
+        description: The raw payment checks, in a schema of their own.
+        columns:
+          - name: id
+          - name: payment_id
+          - name: checked_at

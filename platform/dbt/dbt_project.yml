@@ -1,0 +1,14 @@
+# Harbor Retail, a made-up company: the Platform team's dbt project for store sales.
+name: harbor_platform
+version: "1.0.0"
+profile: harbor_platform
+model-paths: ["models"]
+snapshot-paths: ["snapshots"]
+analysis-paths: ["analyses"]
+test-paths: ["tests"]
+models:
+  harbor_platform:
+    staging:
+      +materialized: view
+    marts:
+      +materialized: table

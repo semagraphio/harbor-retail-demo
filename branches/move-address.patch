@@ -1,0 +1,27 @@
+--- a/models/marts/orders.sql
++++ b/models/marts/orders.sql
+@@ -2,8 +2,8 @@
+     o.order_id,
+     o.customer_id,
+     o.status,
+-    o.ship_city,
+-    o.ship_postcode,
++    o.ship_city as shipping_city,
++    md5(o.ship_city || o.ship_postcode) as address_id,
+     o.amount as total_amount,
+     p.paid_amount,
+     o.ordered_at,
+--- a/models/marts/schema.yml
++++ b/models/marts/schema.yml
+@@ -8,9 +8,9 @@
+       - name: customer_id
+         tests: [not_null, {relationships: {to: "ref('customer_orders')", field: customer_id}}]
+       - name: status
+-      - name: ship_city
++      - name: shipping_city
+         description: The city the order ships to.
+-      - name: ship_postcode
++      - name: address_id
+       - name: total_amount
+       - name: paid_amount
+   - name: order_items

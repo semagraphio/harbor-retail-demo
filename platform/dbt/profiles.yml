@@ -1,0 +1,9 @@
+harbor_platform:
+  target: prod
+  outputs:
+    prod:
+      type: snowflake
+      account: harbor-retail
+      database: analytics
+      schema: platform
+      warehouse: transform

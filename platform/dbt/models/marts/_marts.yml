@@ -1,0 +1,14 @@
+version: 2
+models:
+  - name: daily_store_sales
+    columns:
+      - name: store_id
+        tests:
+          - not_null
+      - name: sale_date
+        tests:
+          - not_null
+      - name: revenue
+        tests:
+          - not_null:
+              severity: warn

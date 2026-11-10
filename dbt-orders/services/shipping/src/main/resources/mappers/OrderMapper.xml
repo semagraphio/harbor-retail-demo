@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- Harbor Retail, a made-up company: the queries the shipping service runs against the orders tables. -->
+<mapper namespace="com.harbor.shipping.OrderMapper">
+  <resultMap id="ShippingRow" type="com.harbor.shipping.OrderVo">
+    <id column="order_id" property="id"/>
+    <result column="ship_city" property="shipCity"/>
+    <result column="total_amount" property="totalAmount"/>
+  </resultMap>
+
+  <select id="selectShippingQueue" resultMap="ShippingRow">
+    select order_id, ship_city, total_amount
+    from orders
+    where status = 'paid'
+  </select>
+
+  <select id="countOpenOrders" resultType="int">
+    select count(*)
+    from orders o
+    where exists (select 1 from order_items i where i.order_id = o.order_id and i.quantity > 0)
+  </select>
+</mapper>

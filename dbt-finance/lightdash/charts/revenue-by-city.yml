@@ -1,0 +1,28 @@
+# Made up for the demo, in the shape `lightdash download` writes.
+name: Revenue by ship-to city
+description: Net revenue per city the orders ship to.
+tableName: fct_order_revenue
+updatedAt: "2026-10-01T09:00:00.000Z"
+metricQuery:
+  exploreName: fct_order_revenue
+  dimensions:
+    - fct_order_revenue_ship_city
+    - fct_order_revenue_revenue_date
+  metrics:
+    - fct_order_revenue_net_revenue_sum
+  filters: {}
+  sorts:
+    - fieldId: fct_order_revenue_net_revenue_sum
+      descending: true
+  limit: 50
+  tableCalculations: []
+chartConfig:
+  type: table
+slug: revenue-by-city
+tableConfig:
+  columnOrder:
+    - fct_order_revenue_ship_city
+    - fct_order_revenue_revenue_date
+    - fct_order_revenue_net_revenue_sum
+spaceSlug: finance
+version: 1

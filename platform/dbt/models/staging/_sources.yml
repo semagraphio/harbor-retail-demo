@@ -1,0 +1,23 @@
+version: 2
+sources:
+  - name: raw
+    schema: raw
+    loader: Fivetran
+    tables:
+      - name: store_sales
+        columns:
+          - name: sale_id
+          - name: store_id
+          - name: customer_id
+          - name: sold_at
+          - name: amount
+      - name: customers
+        loaded_at_field: updated_at
+        freshness:
+          warn_after: {count: 12, period: hour}
+          error_after: {count: 24, period: hour}
+        columns:
+          - name: customer_id
+          - name: email
+          - name: loyalty_tier
+          - name: updated_at

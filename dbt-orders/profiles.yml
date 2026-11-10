@@ -1,0 +1,11 @@
+harbor:
+  target: prod
+  outputs:
+    prod:
+      type: postgres
+      host: orders-db.harbor.example
+      port: 5432
+      user: dbt
+      dbname: harbor
+      schema: analytics
+      threads: 4

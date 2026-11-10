@@ -1,0 +1,29 @@
+# Made up for the demo, in the shape `lightdash download` writes.
+name: Finance overview
+description: The page the CFO office opens each morning.
+updatedAt: "2026-10-01T09:00:00.000Z"
+tiles:
+  - x: 0
+    y: 0
+    h: 9
+    w: 18
+    type: saved_chart
+    properties:
+      title: Revenue by ship-to city
+      chartSlug: revenue-by-city
+  - x: 18
+    y: 0
+    h: 9
+    w: 18
+    type: saved_chart
+    properties:
+      title: Margin trend
+      chartSlug: margin-trend
+filters:
+  dimensions: []
+  metrics: []
+  tableCalculations: []
+tabs: []
+slug: finance-overview
+spaceSlug: finance
+version: 1
